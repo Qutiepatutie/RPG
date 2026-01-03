@@ -1,10 +1,11 @@
-using System.Windows.Media.Imaging;
 using Engine.Models;
+using Engine.Factories;
 
 namespace Engine.ViewModels
 {
     public class GameSession
     {
+        public World CurrWorld { get; set; }
         public Player? CurrPlayer { get; set; }
         public Location? CurrLocation { get; set; }
 
@@ -18,12 +19,10 @@ namespace Engine.ViewModels
             CurrPlayer.Level = 1;
             CurrPlayer.Gold = 1000000;
 
-            CurrLocation = new Location();
-            CurrLocation.Name = "Home";
-            CurrLocation.X = 0;
-            CurrLocation.Y = 0;
-            CurrLocation.Description = "This is your house";
-            CurrLocation.ImageName = new BitmapImage(new Uri("pack://application:,,,/Engine;component/Assets/Locations/Home.png", UriKind.Absolute));
+            WorldFactory factory = new WorldFactory();
+            CurrWorld = factory.CreateWorld();
+
+            CurrLocation = CurrWorld.LocationAt(0,0);
         }
     }
 }
